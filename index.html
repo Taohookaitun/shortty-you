@@ -31,45 +31,22 @@
             <h1>Short URL</h1>
             <div class="search-container">
                 <input type="text" class="search-box" id="short-text" placeholder="www.example.com">
-                <a id="shortened-url" href="" target="_blank"></a>
                 <p id="warning-message" style="color: red;"></p>
                 <output type="box"></output>
                 <button class="search-button" id="shorten">Shorten</button>
                 <script>
-                    const shortenButton = document.getElementById('shorten');
                     const shortText = document.getElementById('short-text');
-                    const shortenedUrl = document.getElementById('shortened-url');
-                
-                    shortenButton.addEventListener('click', () => {
-                        const originalUrl = shortText.value;
-                        if (originalUrl.trim() === '') {
-                            alert('Please enter a URL.');
-                            return;
+                    const warningMessage = document.getElementById('warning-message');
+                    const shortenButton = document.getElementById('shorten');
+                    
+                    shortenButton.addEventListener("click", function () {
+                        if (shortText.value.length === 0) {
+                            warningMessage.textContent = 'Please enter URL.';
+                        } else {
+                            window.location.href = "shorten.html";
                         }
-                
-                        // ส่งคำขอ POST ไปยัง API
-                        fetch('/shorten', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ originalUrl }),
-                            
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            // แสดง URL ย่อในแท็ก <a>
-                            shortenedUrl.href = data.shortUrl;
-                            shortenedUrl.textContent = data.shortUrl;
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                             alert('An error occurred. Please try again later.'); // แสดงข้อความผิดพลาด
-                        });
-
                     });
                 </script>
-                
                 
             </div>
         </div>
@@ -86,11 +63,7 @@
         </div>
         <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
         <script src="qr.js"></script>
-        <script src="conn.mjs"></script>
-        <div class="tabs">
-            <!-- เพิ่มตำแหน่ง URL ย่อไว้ที่นี่ -->
-            <a id="shortened-url" href="" target="_blank"></a>
-        </div>
+        <script src="conn.js"></script>
     
     </main>
 
