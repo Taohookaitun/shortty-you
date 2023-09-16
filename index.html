@@ -25,11 +25,14 @@
         <div class="tabs">
             <button class="tab-button active" onclick="openTab('shorturl')">Short URL</button>
             <button class="tab-button" onclick="openTab('Qrcode')">Qr code</button>
+
         </div>
         
-        <div class="tab-content" id="shorturl">
+        
+        <div class="tab-content" id="shorturl" style="display: none;">
             <h1>Short URL</h1>
-            <div class="search-container">
+            <!-- ในส่วนของ Short URL -->
+        <div class="search-container">
                 <input type="text" class="search-box" id="short-text" placeholder="www.example.com">
                 <p id="warning-message" style="color: red;"></p>
                 <output type="box"></output>
@@ -53,7 +56,7 @@
 </body>
 </html>
 
-        <div class="tab-content" id="Qrcode">
+        <div class="tab-content" id="Qrcode" style="display: none;">
             <h1>QrCode</h1>
             <div class="search-container">
                 <input type="text" class="search-box" id="qr-text"placeholder="Enter text or URL">
