@@ -1,55 +1,97 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Website</title>
-    <img src="3.png" alt="Description of the image">
+    <title>  
+        Shortty You!
+    </title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
+
 <body>
+    <img src="3.png" alt="image error">
     <header>
-        <nav>
             <ul>
-                <h1>Make your connect to easy</h1>
-
-                  <h6>Shorten Your Links, Share with Ease</h6>
+                <p>          
+                    <h2>EASY TO GENERATE</h2>
+                    <sup><span style="white-space: nowrap;">
+                        <h6>Shorten Your Links, QR Codes Made Simple, Share with Ease</h6>
+                    </span></sup></p>
             </ul>
-        </nav>
     </header>
-
     <main>
-        <::before>
-          <section>
-            <li class="tabs-title is-active" role="presentation"> <a id="tab-short-link"
-              href="#panel-short-link" aria-selected="true" role="tab"
-              aria-controls="panel-short-link" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg"
-              height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280H280q-83
-              0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85
-              35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0
-              141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z"/></svg>  <span> Short link</span> </a> </li>
-            <form action="generate.php" method="POST">
-                <label for="originalURL">Enter the URL to shorten:</label>
-                <input type="url" id="originalURL" name="originalURL" required>
-                <button type="submit">Shorten</button>
-            </form>
-        </section>
-        </::before>
-        <section id="section1">
-            <h2>Section 1</h2>
-            <p>This is the first section of my website.</p>
-        </section>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('shorturl')">Short URL</button>
+            <button class="tab-button" onclick="openTab('Qrcode')">Qr code</button>
+        </div>
+        
+        <div class="tab-content" id="shorturl">
+            <h1>Short URL</h1>
+            <div class="search-container">
+                <input type="text" class="search-box" id="short-text" placeholder="www.example.com">
+                <a id="shortened-url" href="" target="_blank"></a>
+                <p id="warning-message" style="color: red;"></p>
+                <output type="box"></output>
+                <button class="search-button" id="shorten">Shorten</button>
+                <script>
+                    const shortenButton = document.getElementById('shorten');
+                    const shortText = document.getElementById('short-text');
+                    const shortenedUrl = document.getElementById('shortened-url');
+                
+                    shortenButton.addEventListener('click', () => {
+                        const originalUrl = shortText.value;
+                        if (originalUrl.trim() === '') {
+                            alert('Please enter a URL.');
+                            return;
+                        }
+                
+                        // ส่งคำขอ POST ไปยัง API
+                        fetch('/shorten', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ originalUrl }),
+                            
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // แสดง URL ย่อในแท็ก <a>
+                            shortenedUrl.href = data.shortUrl;
+                            shortenedUrl.textContent = data.shortUrl;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                             alert('An error occurred. Please try again later.'); // แสดงข้อความผิดพลาด
+                        });
 
-        <section id="section2">
-            <h2>Section 2</h2>
-            <p>Here's the second section with some content.</p>
-        </section>
+                    });
+                </script>
+                
+                
+            </div>
+        </div>
+</body>
+</html>
 
-        <section id="section3">
-            <h2>Section 3</h2>
-            <p>This is the third section of the website.</p>
-        </section>
+        <div class="tab-content" id="Qrcode">
+            <h1>QrCode</h1>
+            <div class="search-container">
+                <input type="text" class="search-box" id="qr-text"placeholder="Enter text or URL">
+                <button onclick="generateQRCode()"class="search-button">Generate QR Code</button>
+            </div>
+            <div id="qrcode"></div>
+        </div>
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+        <script src="qr.js"></script>
+        <script src="conn.mjs"></script>
+        <div class="tabs">
+            <!-- เพิ่มตำแหน่ง URL ย่อไว้ที่นี่ -->
+            <a id="shortened-url" href="" target="_blank"></a>
+        </div>
+    
     </main>
 
     <footer>
